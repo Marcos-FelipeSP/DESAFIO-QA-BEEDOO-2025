@@ -13,12 +13,16 @@ Feature: Módulo de Cursos - Listar, Cadastrar e Excluir
   Scenario: Cadastrar curso com dados válidos
     Given que eu estou na página principal
     When eu clico em "Cadastrar curso"
-    And preencho "nome" com "Curso de Teste"
-    And preencho "descrição" com "Descrição válida"
+    And preencho "nome do curso" com "Curso de Teste"
+    And preencho "descrição do curso" com "Descrição válida"
+    And preencho "Instrutor" com "Nome do instrutor"
+    And preencho "Url da imagem da capa" com "Url válida"
     And preencho "data_inicio" com "2025-10-01"
     And preencho "data_fim" com "2025-10-10"
+    And preencho "Número de vagas" com "Valor maior que zero"
+    And preencho "Tipo do curso" com "Uma das escolhas"
     And submeto o formulário
-    Then eu devo ver confirmação de sucesso
+    Then eu devo ver a confirmação de sucesso
     And o curso "Curso de Teste" deve aparecer em "Lista de cursos"
 
   @create @validation_required
@@ -55,10 +59,12 @@ Feature: Módulo de Cursos - Listar, Cadastrar e Excluir
   Scenario: Não permitir cadastrar curso com número de vagas negativo
     Given que eu estou na página principal
     When eu clico em "Cadastrar curso"
-    And preencho "nome" com "Curso Negativo"
+    And preencho "nome do curso" com "Curso Negativo"
     And preencho "descrição" com "Teste número de vagas negativas"
-    And preencho "número de vagas" com "-2"
+    And preencho "Instrutor" com "Nome do instrutor"
+    And preencho "Url da imagem da capa" com "Url válida"
     And preencho "data_inicio" e "data_fim" válidas
+    And preencho "número de vagas" com "-2"
     And submeto o formulário
     Then eu devo ver uma mensagem de erro indicando que o número de vagas deve ser positivo
     And o curso não deve ser criado
@@ -66,7 +72,7 @@ Feature: Módulo de Cursos - Listar, Cadastrar e Excluir
   @delete @success
   Scenario: Excluir curso com confirmação deve remover o curso
     Given que exista o curso "Curso Para Excluir"
-    When eu clico em "Excluir" do curso "Curso Para Excluir"
+    When eu clico em "Excluir"
     And confirmo a exclusão no popup
-    Then o curso "Curso Para Excluir" não deve aparecer mais na lista
+    Then o curso não deve aparecer mais na lista
     And após atualizar a página, o curso não deve reaparecer
