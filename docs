@@ -1,0 +1,72 @@
+Feature: Módulo de Cursos - Listar, Cadastrar e Excluir
+
+  Background:
+    Given que eu esteja na página inicial do módulo de cursos
+
+  @list @empty
+  Scenario: Visualizar lista vazia deve mostrar mensagem informativa
+    Given que não exista nenhum curso cadastrado
+    When eu clico em "Lista cursos"
+    Then eu devo ver a mensagem "Nenhum curso cadastrado" ou equivalente
+
+  @create @success
+  Scenario: Cadastrar curso com dados válidos
+    Given que eu estou na página principal
+    When eu clico em "Cadastrar curso"
+    And preencho "nome" com "Curso de Teste"
+    And preencho "descrição" com "Descrição válida"
+    And preencho "data_inicio" com "2025-10-01"
+    And preencho "data_fim" com "2025-10-10"
+    And submeto o formulário
+    Then eu devo ver confirmação de sucesso
+    And o curso "Curso de Teste" deve aparecer em "Lista de cursos"
+
+  @create @validation_required
+  Scenario: Não permitir criar curso com campos vazios
+    Given que eu estou na página principal
+    When eu clico em "Cadastrar curso"
+    And deixo todos os campos vazios
+    And submeto o formulário
+    Then eu devo ver mensagens de erro indicando campos obrigatórios
+    And o curso não deve ser criado
+
+  @create @validation_partial
+  Scenario: Não permitir criar curso se qualquer campo obrigatório estiver vazio
+    Given que eu estou na página principal
+    When eu clico em "Cadastrar curso"
+    And preencho "nome" com "Apenas Nome"
+    And deixo "descrição" vazia
+    And preencho datas válidas
+    And submeto o formulário
+    Then eu devo ver mensagem de erro para o campo "descrição"
+    And o curso não deve ser criado
+
+  @create @date_validation
+  Scenario: Validar que data de início não pode ser maior que data de fim
+    Given que eu estou na página principal
+    When eu clico em "Cadastrar curso"
+    And preencho "data_inicio" com "2025-11-01"
+    And preencho "data_fim" com "2025-10-01"
+    And submeto o formulário
+    Then eu devo ver erro indicando que "data início" não pode ser maior que "data fim"
+    And o curso não deve ser criado
+
+  @create @validation_negative
+  Scenario: Não permitir cadastrar curso com número de vagas negativo
+    Given que eu estou na página principal
+    When eu clico em "Cadastrar curso"
+    And preencho "nome" com "Curso Negativo"
+    And preencho "descrição" com "Teste número de vagas negativas"
+    And preencho "número de vagas" com "-2"
+    And preencho "data_inicio" e "data_fim" válidas
+    And submeto o formulário
+    Then eu devo ver uma mensagem de erro indicando que o número de vagas deve ser positivo
+    And o curso não deve ser criado
+
+  @delete @success
+  Scenario: Excluir curso com confirmação deve remover o curso
+    Given que exista o curso "Curso Para Excluir"
+    When eu clico em "Excluir" do curso "Curso Para Excluir"
+    And confirmo a exclusão no popup
+    Then o curso "Curso Para Excluir" não deve aparecer mais na lista
+    And após atualizar a página, o curso não deve reaparecer
