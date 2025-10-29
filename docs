@@ -6,7 +6,7 @@ Feature: Módulo de Cursos - Listar, Cadastrar e Excluir
   @list @empty
   Scenario: Visualizar lista vazia deve mostrar mensagem informativa
     Given que não exista nenhum curso cadastrado
-    When eu clico em "Lista cursos"
+    When eu clico em "Listar cursos"
     Then eu devo ver a mensagem "Nenhum curso cadastrado" ou equivalente
 
   @create @success
