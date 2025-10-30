@@ -46,5 +46,5 @@ Criar User Story e casos de teste (sucesso e erro) para o módulo **Cursos** dis
 
 ---
 # Links
-- 🧾 **Planilha Google Sheets:** [INSIRA O LINK AQUI]
-- 🎥 **Evidências (Google Drive):** [INSIRA O LINK AQUI]
+- 🧾 **Planilha Google Sheets:** [[INSIRA O LINK AQUI]](https://docs.google.com/spreadsheets/d/1_EDpXH2t_RNEQIXNscWgUdmJochfzu4Yl8AaCVH3xbM/edit?usp=sharing)
+- 🎥 **Evidências (Google Drive):** [[INSIRA O LINK AQUI]](https://drive.google.com/drive/folders/1k_mXhpHfGU1yOcGt_pJDeV_P12zt-GDv?usp=sharing)
